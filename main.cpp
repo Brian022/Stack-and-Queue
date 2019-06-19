@@ -33,20 +33,10 @@ class Cola
     }
     ~Cola()
     {
-        /*******************************
-        Node<T> *temp=first;
-        Node<T> *temp1;
-        while(temp->sgte != NULL)
+        while(!vacio())
         {
-            temp = temp->sgte;
-            temp1 = temp;
-            delete temp;
-            if(temp->sgte == NULL)
-            {
-                delete temp;
-            }
-
-        *********************************/
+            pop();
+        }
     }
     bool vacio()
     {
