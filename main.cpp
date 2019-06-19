@@ -3,7 +3,7 @@
 using namespace std;
 
 template<typename T>
-class Stack;
+class Cola;
 
 template<typename T>
 class Node
@@ -15,47 +15,69 @@ class Node
     public:
     Node(T data){this->data = data;}
 
-    friend class Stack<T>;
+    friend class Cola<T>;
 };
 
 template<typename T>
-class Stack
+class Cola
 {
     private:
-    Node<T> *top;
+    Node<T> *first;
     Node<T> *actual;
+    int tam = 0;
     public:
 
-    Stack()
+    Cola()
     {
-        top = NULL;
+        first = NULL;
     }
-    ~Stack()
+    ~Cola()
     {
-        while(!vacio())
-            pop();
+        /*******************************
+        Node<T> *temp=first;
+        Node<T> *temp1;
+        while(temp->sgte != NULL)
+        {
+            temp = temp->sgte;
+            temp1 = temp;
+            delete temp;
+            if(temp->sgte == NULL)
+            {
+                delete temp;
+            }
+
+        *********************************/
     }
     bool vacio()
     {
-        if(top == NULL)
-             return true;
-        return false;
+        if(first == NULL)
+        {
+            return true;
+        }
+        else
+            return false;
 
     }
-
+    void mTamano(int x){    tam+=x;    }
+    void meTamano(int x){   tam-=x;    }
+    int Size(){  return tam;  }
 
     void push(T data)
     {
-        Node<T> *newTop = new Node<T>(data);
-        if(top==NULL)
+        mTamano(1);
+
+        if(first == NULL)
         {
-            top = newTop;
+            Node<T> *nuevofirst = new Node<T>(data);
+            first = nuevofirst;
         }
         else
         {
-            newTop->sgte=top;
+            Node<T> *actual = first;
+            while(actual->sgte != NULL){actual = actual->sgte;}
+            actual->sgte = new Node<T>(data);
         }
-        top=newTop;
+
 
     }
 
@@ -63,43 +85,44 @@ class Stack
     {
         if(!vacio())
         {
-        Node<T> *actual =top;
-        top=actual->sgte;
-        delete actual;
-        return;
+        Node<T> *temp = first;
+        first = temp->sgte;
+        delete temp;
+        meTamano(1);
         }
-    }
 
+    }
     void mostrar()
     {
-        Node<T> *actual = top;
-        while(actual != NULL)
-        {
-            cout<<actual->data<<endl;
-            actual = actual->sgte;
-        }
+        Node<T> *actual = first;
+
+            while(actual != NULL)
+            {
+                cout<<actual->data<<endl;
+                actual = actual->sgte;
+
+            }
+
     }
 
 };
 
 int main()
 {
-    Stack<int> a;
-
+    Cola<int> a;
+    a.vacio();
     a.push(5);
-    a.push(9);
     a.push(10);
-    a.push(8);
+    a.push(15);
     a.mostrar();
-    cout<<"-------";
+    cout<<a.Size();
+    cout<<"----\n";
     a.pop();
     a.pop();
     a.pop();
     a.pop();
     a.mostrar();
-
-
-
+    cout<<a.Size();
 
     return 0;
 }
