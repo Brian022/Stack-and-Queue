@@ -11,6 +11,7 @@ class Node
     private:
     Node<T> *sgte;
     T data;
+    
 
     public:
     Node(T data){this->data = data;}
@@ -24,7 +25,7 @@ class Cola
     private:
     Node<T> *first;
     Node<T> *actual;
-    int tam = 0;
+    int tam =0;
     public:
 
     Cola()
@@ -48,13 +49,22 @@ class Cola
             return false;
 
     }
-    void mTamano(int x){    tam+=x;    }
-    void meTamano(int x){   tam-=x;    }
-    int Size(){  return tam;  }
+    
+    int Size()
+    {
+        int tam = 0;
+        Node<T> *actual = first;
+        while(actual != NULL)
+        {
+             tam += 1;
+            actual = actual->sgte;
+        }
+        return tam;
+    }
 
     void push(T data)
     {
-        mTamano(1);
+
         Node<T> *nuevo = new Node<T>(data);
 
         if(first == NULL)
@@ -76,9 +86,8 @@ class Cola
         if(!vacio())
         {
             Node<T> *actual = first;
-            first = first->sgte;
-            delete actual;
-            meTamano(1);
+            delete first;
+            first = actual->sgte;
         }
 
 
@@ -90,7 +99,7 @@ class Cola
 
             while(actual != NULL)
             {
-                cout<<actual->data<<endl;
+                cout<<actual->data<< "-> ";
                 actual = actual->sgte;
             }
 
@@ -103,21 +112,27 @@ int main()
     Cola<int> a;
     a.push(5);
     a.mostrar();
-    cout<<"tam = "<<a.Size()<<"\n";
+    cout<<"Tamano = "<<a.Size()<<"\n";
+    a.pop();
     a.pop();
     a.pop();
     a.push(4);
     a.push(4);
     a.push(4);
     a.mostrar();
-    cout<<"tam = "<<a.Size()<<"\n";
+    cout<<"Tamano = "<<a.Size()<<"\n";
     a.push(5);
     a.push(7);
     a.pop();
     a.pop();
     a.pop();
+    a.pop();
+    a.pop();
+    a.pop();
+    a.push(3);
+    a.push(7);
     a.mostrar();
-    cout<<"tam = "<<a.Size()<<"\n";
+    cout<<"Tamano = "<<a.Size()<<"\n";
 
 
 
