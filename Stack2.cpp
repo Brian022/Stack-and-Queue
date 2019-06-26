@@ -50,6 +50,7 @@ class Stack
         if(top==NULL)
         {
             top = newTop;
+            top->sgte = NULL;
         }
         else
         {
@@ -63,9 +64,10 @@ class Stack
     {
         if(!vacio())
         {
-            Node<T> *actual =top;
-            top=top->sgte;
+            Node<T> *actual = top;
+            top = top->sgte;
             delete actual;
+            
         }
     }
 
@@ -74,7 +76,7 @@ class Stack
         Node<T> *actual = top;
         while(actual != NULL)
         {
-            cout<<actual->data<<endl;
+            cout<<actual->data<< "-> ";
             actual = actual->sgte;
         }
     }
@@ -86,16 +88,17 @@ int main()
     Stack<int> a;
 
     a.push(5);
+    a.push(2);
     a.mostrar();
     cout<<"\n-------\n";
     a.pop();
     a.pop();
-
+    a.pop();
     a.push(7);
     a.mostrar();
     cout<<"\n-------\n";
-    a.push(9);
     a.push(8);
+    a.push(6);
     a.pop();
     a.mostrar();
 
