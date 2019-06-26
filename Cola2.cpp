@@ -3,7 +3,7 @@
 using namespace std;
 
 template<typename T>
-class Stack;
+class Cola;
 
 template<typename T>
 class Node
@@ -11,52 +11,74 @@ class Node
     private:
     Node<T> *sgte;
     T data;
+    
 
     public:
     Node(T data){this->data = data;}
 
-    friend class Stack<T>;
+    friend class Cola<T>;
 };
 
 template<typename T>
-class Stack
+class Cola
 {
     private:
-    Node<T> *top;
+    Node<T> *first;
     Node<T> *actual;
+    int tam =0;
     public:
 
-    Stack()
+    Cola()
     {
-        top = NULL;
+        first = NULL;
     }
-    ~Stack()
+    ~Cola()
     {
         while(!vacio())
+        {
             pop();
+        }
     }
     bool vacio()
     {
-        if(top == NULL)
-             return true;
-        return false;
+        if(first == NULL)
+        {
+            return true;
+        }
+        else
+            return false;
 
     }
-
+    
+    int Size()
+    {
+        int tam = 0;
+        Node<T> *actual = first;
+        while(actual != NULL)
+        {
+             tam += 1;
+            actual = actual->sgte;
+        }
+        return tam;
+    }
 
     void push(T data)
     {
-        Node<T> *newTop = new Node<T>(data);
-        if(top==NULL)
+
+        Node<T> *nuevo = new Node<T>(data);
+
+        if(first == NULL)
         {
-            top = newTop;
-            top->sgte = NULL;
+            first = nuevo;
+            first->sgte =NULL;
         }
         else
         {
-            newTop->sgte=top;
+            Node<T> *actual = first;
+            while(actual->sgte != NULL){actual = actual->sgte;}
+            actual->sgte = nuevo;
         }
-        top=newTop;
+
 
     }
 
@@ -64,44 +86,48 @@ class Stack
     {
         if(!vacio())
         {
-            Node<T> *actual = top;
-            top = top->sgte;
+            Node<T> *actual = first;
+            first = first->sgte;
             delete actual;
             
         }
-    }
 
+
+
+    }
     void mostrar()
     {
-        Node<T> *actual = top;
-        while(actual != NULL)
-        {
-            cout<<actual->data<< "-> ";
-            actual = actual->sgte;
-        }
+        Node<T> *actual = first;
+
+            while(actual != NULL)
+            {
+                cout<<actual->data<< "-> ";
+                actual = actual->sgte;
+            }
+
     }
 
 };
 
 int main()
 {
-    Stack<int> a;
-
+    Cola<int> a;
     a.push(5);
-    a.push(2);
-    a.mostrar();
-    cout<<"\n-------\n";
-    a.pop();
-    a.pop();
-    a.pop();
     a.push(7);
     a.mostrar();
-    cout<<"\n-------\n";
-    a.push(8);
-    a.push(6);
+    cout<<"Tamano = "<<a.Size()<<"\n";
+    a.pop();
+    a.pop();
+    a.pop();
+    a.push(4);
+    a.mostrar();
+    cout<<"Tamano = "<<a.Size()<<"\n";
+    a.pop();
+    a.push(3);
+    a.push(7);
     a.pop();
     a.mostrar();
-
+    cout<<"Tamano = "<<a.Size()<<"\n";
 
 
 
